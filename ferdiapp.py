@@ -7,7 +7,7 @@ import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 #from urllib.error import URLError
 
-df = pd.read_csv(r".\testbatch_utf8.csv", sep=';', decimal=",").dropna()
+df = pd.read_csv(r"C:\Users\Thomas\Desktop\temp\Ferdi\testbatch_utf8.csv", sep=';', decimal=",").dropna()
 
 
 df = df.loc[3:]
@@ -23,21 +23,23 @@ for col in list(dft.index[1:]):
   df[col] = df[col].astype(float)
 
 # convert the 'PDatTime' column to datetime format
-df['PDatTime'] = df['PDatTime'].astype('datetime64[ns]')
+df['PDatTime'] = df['PDatTime'].astype('datetime64[ns]') #need to reformat so that day and month are swapped
 
 # Check the format of 'Date' column
 print(df.info())
 print(df.describe())
 
-params = st.multiselect(
+#params = st.multiselect(
+params = st.sidebar.multiselect(
         "Choose parameters", list(dft.index[1:])) #, ["Age", "Subst", "pH"]
 
 df = df.loc[3:]
 dfselect = df[params]
 #st.line_chart(df[params])
 
-    
-st.dataframe(df.head(10))
+st.title('Ferdi\'s Data App')    
+st.dataframe(df.head(6)) #dataframe
+st.dataframe(df.tail(6)) #dataframe
 
 chart_data = pd.DataFrame(
      np.random.randn(20, 3),
